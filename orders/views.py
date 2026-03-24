@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from rest_framework.views import APIview
 from rest_framework.response import Response
+from rest_framework import status
 from rest_framework import timezone
-from django.untils import timezone
+from django.utils import timezone
 from .models import Coupon
 
 # Create your views here.
@@ -15,30 +16,30 @@ class CouponValidationView(APIView):
                 {"error":"Coupon code is requires"},
                 status = status.HTTP_400_BAD_REQUEST
             )
-            try:
-                coupon = Coupon.objects.get(code=code)
-            except Coupon.DoneNotExist:
-                return Response(
-                    {"error":"Invalid coupon code"},
-                    status = status.HTTP_400_BAD_REQUEST
-                )
-            today = timezone.now().date()
-
-            if not coupon.is_active:
-                return Response(
-                    {"error":"Coupon is inactive"},
-                    status = status.HTTP_400_BAD_REQUEST
-                )
-            if not (coupon.valid_from <= today <=coupon.valid_until):
-                return Response(
-                    {"error": "Coupon expired or not yet valid"},
-                    status = status.HTTP_400_BAD_REQUEST
-                )
-
+        try:
+            coupon = Coupon.objects.get(code=code)
+        except Coupon.DoneNotExist:
             return Response(
-                {
-                    "message": "Coupon is valid",
-                    "discount_percentage": coupon.discount_percentage
-                },
-                status = status.HTTP_200_OK
+                {"error":"Invalid coupon code"},
+                    status = status.HTTP_400_BAD_REQUEST
             )
+        today = timezone.now().date()
+
+        if not coupon.is_active:
+            return Response(
+                {"error":"Coupon is inactive"},
+                status = status.HTTP_400_BAD_REQUEST
+            )
+        if not (coupon.valid_from <= today <=coupon.valid_until):
+            return Response(
+                {"error": "Coupon expired or not yet valid"},
+                status = status.HTTP_400_BAD_REQUEST
+            )
+
+        return Response(
+            {
+                "message": "Coupon is valid",
+                "discount_percentage": coupon.discount_percentage
+            },
+            status = status.HTTP_200_OK
+        )
