@@ -2,7 +2,6 @@ from django.shortcuts import render
 from rest_framework.views import APIview
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework import timezone
 from django.utils import timezone
 from .models import Coupon
 
