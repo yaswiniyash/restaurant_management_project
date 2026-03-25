@@ -3,5 +3,5 @@ from .views import *
 
 urlpatterns = [
     path("coupons.validate/", CouponValidateView.as_view(),name="validate-coupon"),
-    
+    path("history/", OrderHistoryView.as_view, name='order-history'),
 ]
