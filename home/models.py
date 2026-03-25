@@ -6,3 +6,11 @@ class MenuCategory(models.Model):
 
     def __str__(self):
         return self.name
+
+class Restaurant(models.Model):
+    name = models.CharField(max_length=255)
+    address = models.TextField()
+    has_delivery = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.name
