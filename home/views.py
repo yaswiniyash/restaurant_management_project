@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from rest_framework.generics import ListAPIView
-from .models import MenuCategory
+from .models import MenuCategory, MenuItem
 from .serializers import MenuCategorySerializer
 from .utils import get_today_operating_hours
 from django.http import HttpResponse
+from .serializers import MenuItemSerializer
 
 # Create your views here.
 class MenuCategoryListView(ListAPIView):
@@ -17,3 +18,9 @@ def show_today_hours(request):
         return HttpResponse(f"Today open from {open_time} - {close_time}")
     else:
         return HttpResponse('Resturant is closed today')
+
+class FeaturedMenuItemListView(ListAPIView):
+    serializer_class = MenuItemSerializer
+
+    def get_queryset(self):
+        return MenuItem.objects.filters(is_featured=True)
