@@ -6,7 +6,3 @@ router = DefaultRouter()
 router.register(r'items', ProductViewSet)
 
 urlpatterns = router.urls
-
-urlpatterns = [
-    path('items/', ItemView.as_view(), name='item-list'),
-]
