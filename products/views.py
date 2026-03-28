@@ -5,6 +5,9 @@ from rest_framework import status
 
 from .models import Item
 from .serializers import ItemSerializer
+from rest_framework import viewsets
+from .models import product
+from .serializers import ProductSerializer
 
 '''
 NOTE: Conside this as a reference and follow this same coding structure or format to work on you tasks
@@ -24,3 +27,16 @@ class ItemView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ProductViewSet(viewsets.ModelViewSet):
+    queryset = product.objects.all()
+    serializer_class = ProductSerializer
+
+    def get_query(self):
+        queryset = Product.objects.all()
+        search_query = self.request.query_params.get('search')
+        if search_query:
+            queryset = queryset.filter(name_icontains=search_query)
+
+        return queryset
