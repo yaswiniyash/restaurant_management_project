@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import date
 
 # Create your models here.
 class MenuCategory(models.Model):
@@ -25,12 +26,24 @@ class MenuItem(models.Model):
     def __str__(self):
         return self.name
 
+class DailySpecialManager(models.Manager):
+    def upcoming(self):
+        today = date.today()
+        return self.filter(date__gte=today)
+
+class DailySpecialManager(models.Manager):
+    def upcoming(self):
+        today = date.today()
+        return self.filter(date__gte=today)
+
 class DailySpecial(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
+    date = models.DateField(null=True, blank=True)
     price = models.DecimalField(max_digits=6, decimal_places=2)
     available = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    objects = DailySpecialManager()
     @staticmethod
     def get_random_special():
         specials = DailySpecial.objects.all()
