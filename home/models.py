@@ -45,3 +45,4 @@ class NutritionalInformation(models.Model):
     carbohydrate_grams = models.DecimalField(max_digits=5, decimal_places=2)
     def __str__(self):
         return f"{self.menu_item.name} - {self.calories} kcal" 
+        
