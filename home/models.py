@@ -20,6 +20,7 @@ class MenuItem(models.Model):
     price = models.DecimalField(max_length=10,decimal_places=2)
     description = models.TextField(blank=True)
     is_featured = models.BooleanField(default=True)
+    Ingredient = models.ManyToManyField(Ingredient, related_name='menu_items')
 
     def __str__(self):
         return self.name
@@ -45,4 +46,9 @@ class NutritionalInformation(models.Model):
     carbohydrate_grams = models.DecimalField(max_digits=5, decimal_places=2)
     def __str__(self):
         return f"{self.menu_item.name} - {self.calories} kcal" 
+
+class Ingredient(models.Model):
+    name = models.CharField(max_length=100)
+    def __str__(self):
+        return self.name
         
