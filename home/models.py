@@ -13,6 +13,7 @@ class Table(models.Model):
 
 class MenuCategory(models.Model):
     name = models.CharField(max_length=100,unique=True)
+    category_name = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -39,9 +40,18 @@ class MenuItem(models.Model):
     is_featured = models.BooleanField(default=True)
     is_available = models.BooleanField(default=True)
     ingredients = models.ManyToManyField('Ingredient', related_name='menu_items')
-
+    category = models.ForeignKey(MenuCategory, on_delete=models.CASCADE, null=True, blank=True)
     def __str__(self):
         return self.name
+
+class Order(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+
+class OrderItem(models.Model):
+    menu_item = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=1)
+
 
 class DailySpecialManager(models.Manager):
     def upcoming(self):
