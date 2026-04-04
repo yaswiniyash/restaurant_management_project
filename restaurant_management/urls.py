@@ -28,4 +28,5 @@ urlpatterns = [
     path('api/token/', obtain_auth_token),
     path('home/',include("home.urls")),
     path('',include('home.urls')),
+    path('',include('productsurls')),
 ]
