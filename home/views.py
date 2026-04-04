@@ -7,6 +7,7 @@ from django.http import HttpResponse
 from .serializers import MenuItemSerializer, IngredientSerializer, TableSerializer
 from rest_framework import viewsets, status, generics
 from rest_framework.response import Response
+from .validation_utils import is_valid_email
 
 # Create your views here.
 class TableDetailView(generics.RetrieveAPIView):
@@ -59,3 +60,11 @@ class MenuItemViewSet(viewsets.ModelViewSet):
                 {"error": str(e)},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+
+@api_view(['post'])
+def check_email(request):
+    email = request.data.get('email')
+
+    if not is_valid_email(email):
+        return Response({'error': "Invalid email"})
+    return Response({'message': "Email is valid"})
