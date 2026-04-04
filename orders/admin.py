@@ -9,5 +9,5 @@ class OrderAdmin(admin.ModelAdmin):
     list_display = ['id', 'status']
     actions = [mark_orders_processed]
 
-admin.site.Register(Order, OrderAdmin)
+admin.site.register(Order, OrderAdmin)
 
