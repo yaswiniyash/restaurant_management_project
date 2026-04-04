@@ -29,4 +29,5 @@ urlpatterns = [
     path('home/',include("home.urls")),
     path('',include('home.urls')),
     path('',include('productsurls')),
+    path('api/', include('home.urls')),
 ]
