@@ -3,11 +3,12 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from .models import Item
+from .models import Item, Product, ProductSerializer
 from .serializers import ItemSerializer
 from rest_framework import viewsets
 from .models import product
 from .serializers import ProductSerializer
+from rest_framework.decorators import api_view
 
 '''
 NOTE: Conside this as a reference and follow this same coding structure or format to work on you tasks
@@ -40,3 +41,16 @@ class ProductViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(name_icontains=search_query)
 
         return queryset
+
+
+@api_view(['GET'])
+def get_menu_by_category(request):
+    category_name = request.GET.get('category')
+
+    if category_name:
+        items = Product.objects.filter(category__category_name__iexact=category_name)
+    else:
+        items = Product.objects.all()
+
+    serializer = ProductSerializer(items, many=True)
+    return Response(serializer.data)
