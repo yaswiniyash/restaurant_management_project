@@ -3,10 +3,10 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from .models import Item, Product, ProductSerializer
-from .serializers import ItemSerializer
+from .models import Item, Product
+from .serializers import ItemSerializer, ProductSerializer
 from rest_framework import viewsets
-from .models import product
+from .models import Products
 from .serializers import ProductSerializer
 from rest_framework.decorators import api_view
 
