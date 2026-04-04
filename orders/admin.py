@@ -5,7 +5,7 @@ from .models import *
 def mark_orders_processed(modeladmin, request, queryset):
     queryset.update(status='Processed')
 
-class OrderAdmin(admin.Modeladmin):
+class OrderAdmin(admin.ModelAdmin):
     list_display = ['id', 'status']
     actions = [mark_orders_processed]
 
