@@ -12,7 +12,7 @@ class Item(models.Model):
 class MenuItem(models.Model):
     name = models.CharField(max_length=255)
 
-class category(models.Model):
+class Category(models.Model):
     category_name = models.CharField(max_length=100)
 
 class Product(models.Model):
