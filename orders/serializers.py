@@ -8,11 +8,12 @@ class OrderItemSerializer(serializers.ModelSerializer):
         fields = ['product_item', 'quantity', 'price']
 
 class OrderSerializer(serializers.ModelSerializer):
+    customer = serializers.StringRelatedField()
     items = OrderItemSerializer(many=True)
 
     class Meta:
         model = Order
-        fields = ['id', 'created_at', 'total_price', 'items']
+        fields = ['id', 'customer', 'created_at', 'total_price', 'items']
 
 class CouponSerializer(serializers.ModelSerializer):
     class Meta:
