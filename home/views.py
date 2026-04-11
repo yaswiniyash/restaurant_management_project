@@ -8,6 +8,8 @@ from .serializers import MenuItemSerializer, IngredientSerializer, TableSerializ
 from rest_framework import viewsets, status, generics
 from rest_framework.response import Response
 from .validation_utils import is_valid_email
+from rest_framework.decorators import api_view
+from rest_framework.models import Resturant
 
 # Create your views here.
 class AvailableTableAPIView(ListAPIView):
@@ -75,3 +77,18 @@ def check_email(request):
     if not is_valid_email(email):
         return Response({'error': "Invalid email"})
     return Response({'message': "Email is valid"})
+
+
+@api_view(['GET'])
+def restaurant_info(request):
+    restaurants = Resturant.objects.all()
+
+    data = []
+    for r in restaurants:
+        data.append({
+            "name": r.name,
+            "address": r.address,
+            "operating_days": r.operating_days
+        })
+
+    return Response(data)
