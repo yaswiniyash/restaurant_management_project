@@ -3,12 +3,12 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.utils import timezone
-from .models import Coupon
+from .models import Coupon, Customer, Order
 from rest_framework.permissions import IsAuthenticated
 from .models import Order
 from .serializers import OrderSerializer
-from .utils import generate_coupon_code
-from rest_framework.generic import ListAPIView
+from .utils import generate_coupon_code, send_order_confirmation_email
+from rest_framework.generic import ListAPIView, 
 from .models import Coupon
 from .serializers import CouponSerializer
 
@@ -59,6 +59,7 @@ class OrderHistoryView(APIView):
         serializer = OrderSerializer(orders, many=True)
         return Response(serializer.data)
 
+
 class GenerateCouponView(APIView):
     def get(self,request):
         code = generate_coupon_code()
@@ -67,3 +68,5 @@ class GenerateCouponView(APIView):
 class CouponListView(ListAPIView):
     queryset = Coupon.objects.all()
     serializer_class = CouponSerializer
+
+
