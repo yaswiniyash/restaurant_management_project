@@ -10,6 +10,13 @@ from rest_framework.response import Response
 from .validation_utils import is_valid_email
 
 # Create your views here.
+class AvailableTableAPIView(ListAPIView):
+    serializer_class = TableSerializer
+
+    def get_queryset(self):
+        return Table.objects.filter(is_available=True)
+
+
 class TableDetailView(generics.RetrieveAPIView):
     queryset = Table.objects.all()
     serializer_class = TableSerializer
