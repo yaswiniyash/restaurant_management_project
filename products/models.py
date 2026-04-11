@@ -9,6 +9,9 @@ class Item(models.Model):
     def __str__(self):
         return str(self.item_name)
 
+class MenuItem(models.Model):
+    name = models.CharField(max_length=255)
+
 class category(models.Model):
     category_name = models.CharField(max_length=100)
 
