@@ -21,19 +21,19 @@ def send_order_confirmation_email(order_id, customer_email, customer_name=None, 
         items_text = "\n".join([f"-{item}" for item in items]) if items else "N/A"
         message = f""" Hi {customer_name or "Customer"},
 
-            Your order has bben placed successfully!
+Your order has bben placed successfully!
 
-            Order ID:{order_id}
+Order ID:{order_id}
 
-            Items:
-            {items_text}
+Items:
+{items_text}
 
-            Total Amount: {total_amount if total_amount else 'N/A'}
+Total Amount: {total_amount if total_amount else 'N/A'}
 
-            We'll nofity you once your order is ready.
+We'll nofity you once your order is ready.
 
-            Thank you for ordering with us!
-
+Thank you for ordering with us!
+"""
         send_mail(
             subject,
             message,
@@ -42,9 +42,11 @@ def send_order_confirmation_email(order_id, customer_email, customer_name=None, 
             fail_silently=False,
         )
         return {"status": "success", "message": "Email sent"}
+
     except Exception as e:
         logger.error(f"Order Email Error (Order {order_id}): {str(e)}")
         return {"status": "error", "message": "Email failed"}
+
 
 def generate_coupon_code(length=10):
     characters = string.ascii_uppercase + string.digits
