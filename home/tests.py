@@ -4,7 +4,7 @@ from products.models import Restaurant
 
 # Create your tests here.
 class RestaurantInfoAPITest(APITestCase):
-    def setup(self):
+    def setUp(self):
         self.restaurant = Restaurant.objects.Create(
             name = "Test Restaurant",
             address = "123 Test St",
