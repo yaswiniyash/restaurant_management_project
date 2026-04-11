@@ -8,7 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 from .models import Order
 from .serializers import OrderSerializer
 from .utils import generate_coupon_code, send_order_confirmation_email
-from rest_framework.generic import ListAPIView, 
+from rest_framework.generic import ListAPIView, RetrieveAPIView
 from .models import Coupon
 from .serializers import CouponSerializer
 
@@ -58,6 +58,11 @@ class OrderHistoryView(APIView):
 
         serializer = OrderSerializer(orders, many=True)
         return Response(serializer.data)
+
+class OrderDetailAPIView(RetrieveAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+    loolup_field = 'id'
 
 
 class GenerateCouponView(APIView):
