@@ -13,4 +13,5 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('tables/<int:pk>/', TableDetailView.as_view(), name='table-detail')
     path('check-email/', check_email),
+    path('tables/available/', AvailableTableAPIView.as_view(), name='available_tables_api'),
 ]
